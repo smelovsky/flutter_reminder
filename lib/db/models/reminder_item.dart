@@ -18,7 +18,7 @@ class ReminderItem implements DbModel {
   final int is_selected;
   final int is_notified;
 
-  ReminderItem({
+  const ReminderItem({
     required this.id,
     required this.title,
     required this.name,

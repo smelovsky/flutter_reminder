@@ -22,6 +22,7 @@ class ReminderItemWidget extends StatelessWidget {
     if (item.is_selected == 1) {
       return GestureDetector(
         onTap: () {
+          print("item: id=${item.id}");
           onToggle(item);
         },
         child: Container(
@@ -43,7 +44,7 @@ class ReminderItemWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${item.title}",
+                        "${item.title}, ${item.date} ${item.time}",
                         overflow: TextOverflow.ellipsis,
                         textScaler: TextScaler.linear(0.8),
                       ),
@@ -125,7 +126,7 @@ class ReminderItemWidget extends StatelessWidget {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
-                "${item.title}",
+                "${item.title}, ${item.date} ${item.time}",
                 overflow: TextOverflow.ellipsis,
                 textScaler: TextScaler.linear(0.8),
               ),

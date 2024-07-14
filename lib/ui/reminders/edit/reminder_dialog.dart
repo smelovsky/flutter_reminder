@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_reminder/ui/reminders/edit/reminder_dialog_bloc.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:intl/intl.dart';
 import '../../../db/models/reminder_item.dart';
 import '../../users/user_dialog.dart';
 
@@ -79,9 +80,26 @@ class _ReminderDialogState extends State<ReminderDialog> with RestorationMixin {
     reminderDate = widget.reminderDate;
     reminderTime = widget.reminderTime;
 
-    _userDialogBloc = BlocProvider.of<ReminderDialogBloc>(context);
-
     if (userName.isNotEmpty) editMode = true;
+
+    var dateTime;
+
+    if (editMode) {
+      if (reminderTime.isNotEmpty) {
+        DateFormat format = DateFormat("MM/dd/yyyy hh:mm");
+        dateTime = format.parse("${reminderDate} ${reminderTime}");
+      } else {
+        DateFormat format = DateFormat("MM/dd/yyyy");
+        dateTime = format.parse("${reminderDate}");
+      }
+
+      if (dateTime != null) {
+        _DateTime = dateTime;
+        _TimeOfDay = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
+      }
+    }
+
+    _userDialogBloc = BlocProvider.of<ReminderDialogBloc>(context);
   }
 
   @override
@@ -169,6 +187,7 @@ class _ReminderDialogState extends State<ReminderDialog> with RestorationMixin {
                   children: [
                     GestureDetector(
                       onTap: () async {
+                        print("_DateTime: ${_DateTime}");
                         var newDate = await showDatePicker(
                           context: context,
                           initialDate: _DateTime,

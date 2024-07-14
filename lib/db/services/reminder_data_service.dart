@@ -1,3 +1,5 @@
+import 'package:flutter_reminder/db/db_model.dart';
+
 import '../models/reminder_item.dart';
 import 'database.dart';
 
@@ -36,6 +38,12 @@ class ReminderDataService {
     );
 
     return items.toList();
+  }
+
+  Future<ReminderItem?> getReminderById({int id = 0}) async {
+    var item = await DB.instance.get<ReminderItem>(id);
+
+    return item;
   }
 
   Future updateReminderItem(ReminderItem item) async {

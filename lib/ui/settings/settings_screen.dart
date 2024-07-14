@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../main.dart';
+import '../../app_state.dart';
 import 'app_settings.dart';
 
-// Define a custom Form widget.
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 

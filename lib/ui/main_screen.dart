@@ -8,7 +8,7 @@ import 'package:flutter_reminder/ui/settings/settings_screen.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-import '../main.dart';
+import '../app_state.dart';
 import 'about/about_screen.dart';
 
 class MainScreen extends StatefulWidget {
