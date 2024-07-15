@@ -107,31 +107,38 @@ class PreviewPageState extends State<PreviewPage> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 4.0, vertical: 4.0),
                   child: Row(children: [
-                    Column(children: [
-                      Text("Date"),
-                      Container(
-                        width: 100,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 4.0, vertical: 4.0),
-                          child: Text(reminderDate),
+                    Expanded(
+                        child: Container(
+                          child: Column(children: [
+                            Text("Date"),
+                            Container(
+                              width: 100,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 4.0, vertical: 4.0),
+                                child: Text(reminderDate),
+                              ),
+                              decoration: BoxDecoration(border: Border.all()),
+                            ),
+                          ]),
                         ),
-                        decoration: BoxDecoration(border: Border.all()),
-                      ),
-                    ]),
-                    Padding(padding: EdgeInsets.only(left: 50)),
-                    Column(children: [
-                      Text("Time"),
-                      Container(
-                        width: 100,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 4.0, vertical: 4.0),
-                          child: Text(reminderTime),
+                        flex: 1),
+                    Expanded(
+                        child: Container(
+                          child: Column(children: [
+                            Text("Time"),
+                            Container(
+                              width: 100,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 4.0, vertical: 4.0),
+                                child: Text(reminderTime),
+                              ),
+                              decoration: BoxDecoration(border: Border.all()),
+                            ),
+                          ]),
                         ),
-                        decoration: BoxDecoration(border: Border.all()),
-                      ),
-                    ]),
+                        flex: 1),
                   ]),
                 ),
                 if (userPictureLage.isNotEmpty)

@@ -125,31 +125,27 @@ class _ReminderDialogState extends State<ReminderDialog> with RestorationMixin {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              TextFormField(
+                  controller: _reminderNameTextEditingController,
+                  decoration: const InputDecoration(
+                    alignLabelWithHint: true,
+                    labelText: "Reminder name*",
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      reminderName = value;
+                    });
+                  },
+                  onEditingComplete: () {
+                    _node.unfocus();
+                  },
+                  onTapOutside: (PointerDownEvent event) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
-                child: TextFormField(
-                    controller: _reminderNameTextEditingController,
-                    decoration: const InputDecoration(
-                      alignLabelWithHint: true,
-                      labelText: "Reminder name*",
-                      border: OutlineInputBorder(),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        reminderName = value;
-                      });
-                    },
-                    onEditingComplete: () {
-                      _node.unfocus();
-                    },
-                    onTapOutside: (PointerDownEvent event) {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    }),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
+                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
                 child: GestureDetector(
                   onTap: () {
                     showDialog(
@@ -180,82 +176,85 @@ class _ReminderDialogState extends State<ReminderDialog> with RestorationMixin {
                       ]),
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        print("_DateTime: ${_DateTime}");
-                        var newDate = await showDatePicker(
-                          context: context,
-                          initialDate: _DateTime,
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime(2100),
-                        );
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      print("_DateTime: ${_DateTime}");
+                      var newDate = await showDatePicker(
+                        context: context,
+                        initialDate: _DateTime,
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2100),
+                      );
 
-                        // Don't change the date if the date picker returns null.
-                        if (newDate == null) {
-                          return;
-                        }
-
+                      if (newDate != null) {
                         setState(() {
                           reminderDate = intl.DateFormat.yMd().format(newDate);
+
+                          DateFormat format = DateFormat("MM/dd/yyyy");
+                          var dateTime = format.parse(reminderDate);
+
+                          if (dateTime != null) {
+                            _DateTime = dateTime;
+                          }
                         });
-                      },
-                      child: Column(
-                          //crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text("Date*"),
-                            Container(
-                              width: 100,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 4.0, vertical: 4.0),
-                                child: Text(reminderDate),
-                              ),
-                              decoration: BoxDecoration(border: Border.all()),
-                            ),
-                          ]),
+                      }
+                    },
+                    child: Container(
+                      child: Column(children: [
+                        Text("Date"),
+                        Container(
+                          width: 100,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 4.0, vertical: 4.0),
+                            child: Text(reminderDate),
+                          ),
+                          decoration: BoxDecoration(border: Border.all()),
+                        ),
+                      ]),
                     ),
-                    Padding(padding: EdgeInsets.only(left: 50)),
-                    GestureDetector(
-                      onTap: () async {
-                        var newTime = await showTimePicker(
-                          context: context,
-                          initialTime: _TimeOfDay,
-                          initialEntryMode: TimePickerEntryMode.dial,
-                          orientation: Orientation.portrait,
-                        );
+                  ),
+                  Padding(padding: EdgeInsets.only(left: 50)),
+                  GestureDetector(
+                    onTap: () async {
+                      var newTime = await showTimePicker(
+                        context: context,
+                        initialTime: _TimeOfDay,
+                        initialEntryMode: TimePickerEntryMode.dial,
+                        orientation: Orientation.portrait,
+                      );
 
-                        // Don't change the time if the time picker returns null.
-                        if (newTime == null) {
-                          return;
-                        }
-
+                      if (newTime != null) {
                         setState(() {
                           reminderTime = newTime.format(context);
+
+                          var hour = int.parse(reminderTime.split(':')[0]);
+                          var minute = int.parse(reminderTime.split(":")[1]);
+                          _TimeOfDay = TimeOfDay(hour: hour, minute: minute);
                         });
-                      },
-                      child: Column(
-                          //crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text("Time"),
-                            Container(
-                              width: 100,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 4.0, vertical: 4.0),
-                                child: Text(reminderTime),
-                              ),
-                              decoration: BoxDecoration(border: Border.all()),
-                            ),
-                          ]),
+                      }
+                    },
+                    child: Container(
+                      child: Column(children: [
+                        Text("Time"),
+                        Container(
+                          width: 100,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 4.0, vertical: 4.0),
+                            child: Text(reminderTime),
+                          ),
+                          decoration: BoxDecoration(border: Border.all()),
+                        ),
+                      ]),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              //),
               if (userPictureLage.isNotEmpty)
                 //Expanded(
                 Flexible(
