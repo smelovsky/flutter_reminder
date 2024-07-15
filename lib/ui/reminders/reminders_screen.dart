@@ -45,9 +45,10 @@ class _ViewModel extends ChangeNotifier {
     state = state.copyWith(items: reminderItems);
   }
 
-  addItem(ReminderItem item) async {
-    await _dataService.insertReminderItem(item);
+  Future<int> addItem(ReminderItem item) async {
+    var id = await _dataService.insertReminderItem(item);
     await _asyncInit();
+    return id;
   }
 
   updateItem(ReminderItem item) async {
@@ -148,15 +149,15 @@ class RemindersScreen extends StatelessWidget {
                 userPictureThumbnail: "",
                 reminderDate: "",
                 reminderTime: "",
-                onFinish: (reminderItem) {
-                  viewModel.addItem(reminderItem);
+                onFinish: (reminderItem) async {
+                  int id = await viewModel.addItem(reminderItem);
                   if (reminderItem.time.isNotEmpty) {
                     var seconds =
                         getDuration(reminderItem.date, reminderItem.time);
                     if (seconds >= 0) {
                       viewModel.scheduleNotification(
                           seconds,
-                          reminderItem.id,
+                          id,
                           reminderItem.date,
                           reminderItem.time,
                           reminderItem.name);

@@ -8,9 +8,10 @@ class ReminderDataService {
     await DB.instance.createUpdate(item);
   }
 
-  Future insertReminderItem(ReminderItem item) async {
+  Future<int> insertReminderItem(ReminderItem item) async {
     var id = await DB.instance.add(item);
     print("insertReminderItem: id=${id}");
+    return id;
   }
 
   Future<ReminderItem> getReminderItemById(int itemId) async {
