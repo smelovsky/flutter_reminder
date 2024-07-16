@@ -143,41 +143,38 @@ class _ReminderDialogState extends State<ReminderDialog> with RestorationMixin {
                   onTapOutside: (PointerDownEvent event) {
                     FocusManager.instance.primaryFocus?.unfocus();
                   }),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
-                child: GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => UserListDialog(onFinish: (user) {
-                        setState(() {
-                          userName =
-                              "${user.results.name.first} ${user.results.name.last}";
-                          userEmail = user.results.email;
-                          userPictureLage = user.results.picture.large;
-                          userPictureThumbnail = user.results.picture.thumbnail;
-                        });
-                      }),
-                    );
-                  },
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text("Random user*"),
-                        Container(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 4.0, vertical: 4.0),
-                            child: Text("${userName}\n${userEmail}"),
-                          ),
-                          decoration: BoxDecoration(border: Border.all()),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => UserListDialog(onFinish: (user) {
+                      setState(() {
+                        userName =
+                            "${user.results.name.first} ${user.results.name.last}";
+                        userEmail = user.results.email;
+                        userPictureLage = user.results.picture.large;
+                        userPictureThumbnail = user.results.picture.thumbnail;
+                      });
+                    }),
+                  );
+                },
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text("Random user*"),
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 4.0, vertical: 4.0),
+                          child: Text("${userName}\n${userEmail}"),
                         ),
-                      ]),
-                ),
+                        decoration: BoxDecoration(border: Border.all()),
+                      ),
+                    ]),
               ),
               Row(
-                mainAxisSize: MainAxisSize.min,
+                //mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
                     onTap: () async {
@@ -204,7 +201,10 @@ class _ReminderDialogState extends State<ReminderDialog> with RestorationMixin {
                     },
                     child: Container(
                       child: Column(children: [
-                        Text("Date"),
+                        Container(
+                          width: 100,
+                          child: Text("Date"),
+                        ),
                         Container(
                           width: 100,
                           child: Padding(
@@ -239,7 +239,10 @@ class _ReminderDialogState extends State<ReminderDialog> with RestorationMixin {
                     },
                     child: Container(
                       child: Column(children: [
-                        Text("Time"),
+                        Container(
+                          width: 100,
+                          child: Text("Time"),
+                        ),
                         Container(
                           width: 100,
                           child: Padding(

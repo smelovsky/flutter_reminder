@@ -106,11 +106,15 @@ class PreviewPageState extends State<PreviewPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 4.0, vertical: 4.0),
-                  child: Row(children: [
-                    Expanded(
-                        child: Container(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
                           child: Column(children: [
-                            Text("Date"),
+                            Container(
+                              width: 100,
+                              child: Text("Date"),
+                            ),
                             Container(
                               width: 100,
                               child: Padding(
@@ -122,11 +126,12 @@ class PreviewPageState extends State<PreviewPage> {
                             ),
                           ]),
                         ),
-                        flex: 1),
-                    Expanded(
-                        child: Container(
+                        Container(
                           child: Column(children: [
-                            Text("Time"),
+                            Container(
+                              width: 100,
+                              child: Text("Time"),
+                            ),
                             Container(
                               width: 100,
                               child: Padding(
@@ -138,8 +143,7 @@ class PreviewPageState extends State<PreviewPage> {
                             ),
                           ]),
                         ),
-                        flex: 1),
-                  ]),
+                      ]),
                 ),
                 if (userPictureLage.isNotEmpty)
                   Flexible(
